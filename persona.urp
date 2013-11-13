@@ -1,0 +1,23 @@
+rewrite all Persona/*
+database dbname=persona
+sql persona.sql
+script http://127.0.0.1/urweb_persona.js
+script https://login.persona.org/include.js
+ffi personaFfi
+jsFunc PersonaFfi.request=request
+jsFunc PersonaFfi.logout=logout
+jsFunc PersonaFfi.watch=watch
+effectful PersonaFfi.request
+effectful PersonaFfi.logout
+effectful PersonaFfi.watch
+ffi ffi
+link ffi.o -ljansson -lm -lcurl
+include ffi.h
+benignEffectful Ffi.http_post
+benignEffectful Ffi.json_get_string
+safeGet main
+safeGet signin
+safeGet signout
+allow responseHeader X-UA-Compatible
+
+persona
