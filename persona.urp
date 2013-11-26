@@ -1,7 +1,7 @@
 rewrite all Persona/*
 database dbname=persona
 sql persona.sql
-script http://127.0.0.1/urweb_persona.js
+script /urweb_persona.js
 script https://login.persona.org/include.js
 ffi personaFfi
 jsFunc PersonaFfi.request=request
