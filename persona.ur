@@ -109,8 +109,8 @@ fun status user =
    of the user without refreshing the page. *)
 fun onload s user = PersonaFfi.watch user
                                      (fn x => user <- rpc (signin x);
-                                             set s user;
-                                             return user)
+                                              set s user;
+                                              return user)
                                      (fn () => rpc (signout ());
                                                set s None)
 
