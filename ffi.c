@@ -71,6 +71,8 @@ uw_Basis_string uw_Ffi_http_post(uw_context ctx, uw_Basis_string url, uw_Basis_s
   curl_easy_setopt(c, CURLOPT_POST, 1);
   curl_easy_setopt(c, CURLOPT_POSTFIELDS, post);
   curl_easy_setopt(c, CURLOPT_POSTFIELDSIZE, strlen(post));
+  curl_easy_setopt(c, CURLOPT_SSL_VERIFYPEER, 1);
+  curl_easy_setopt(c, CURLOPT_SSL_VERIFYHOST, 2);
 
   code = curl_easy_perform(c);
 
