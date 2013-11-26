@@ -21,7 +21,7 @@ build, create the database and run are:
 
 $ make
 $ sqlite3 persona <persona.sql
-$ ./persona
+$ ./persona.exe
 
 The example requires a file 'urweb_persona.js' to be served
 by an external web server. I use 'nginx' and set it up to
