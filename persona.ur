@@ -125,7 +125,7 @@ fun main () =
       <title>Ur/Web Persona Example</title>
     </head>
     <body onload={onload s user}>
-      <dyn signal={v <- signal s; return v}/>
+      <dyn signal={signal s}/>
       <button value="Login" onclick={fn _ => PersonaFfi.request ()}/>
       <button value="Logout" onclick={fn _ => PersonaFfi.logout ()}/>
     </body>
