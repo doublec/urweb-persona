@@ -15,7 +15,7 @@ val expireSeconds = 3600 * 24
 
 sequence sessionIds
 
-table session : {Id : int, Key : int, Identifier : option string, Expires : time}
+table session : {Id : int, Key : int, Identifier : string, Expires : time}
   PRIMARY KEY Id
 
 task periodic 60 = fn () => dml (DELETE FROM session
@@ -37,7 +37,7 @@ fun newSession email =
   now <- now;
   key <- rand;
   dml (INSERT INTO session (Id, Key, Identifier, Expires)
-         VALUES ({[ses]}, {[key]}, {[Some email]}, {[addSeconds now expireSeconds]}));
+         VALUES ({[ses]}, {[key]}, {[email]}, {[addSeconds now expireSeconds]}));
   return {Session = ses, Key = key}
 
 fun startSession email = 
@@ -93,7 +93,7 @@ fun authedUser () =
                                 WHERE session.Id = {[login.Session]}
                                 AND session.Key = {[login.Key]});
        case ident of
-       | Some (Some ident) => return (Some login.User)
+       | Some ident => return (Some login.User)
        | _ => return None
 
 (* Return something to be displayed to indicate the users login status *)
