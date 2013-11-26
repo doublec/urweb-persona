@@ -108,24 +108,24 @@ fun status user =
    Ur/Web reactive system to allow showing the login status
    of the user without refreshing the page. *)
 fun onload s user = PersonaFfi.watch user
-                                      (fn x => user <- rpc (signin x);
-                                              set s (status user);
-                                              return user)
-                                      (fn () => rpc (signout ());
-                                                set s (status user))
+                                     (fn x => user <- rpc (signin x);
+                                             set s user;
+                                             return user)
+                                     (fn () => rpc (signout ());
+                                               set s None)
 
 (* The main entry point for the application. Contains Login/Logout
    buttons and displays something when the login status changes. *)
 fun main () = 
     noCompatibilityMode();
     user <- authedUser ();
-    s <- source (status user); 
+    s <- source user; 
     return <xml>
     <head>
       <title>Ur/Web Persona Example</title>
     </head>
     <body onload={onload s user}>
-      <dyn signal={signal s}/>
+      <dyn signal={user <- signal s; return (status user)}/>
       <button value="Login" onclick={fn _ => PersonaFfi.request ()}/>
       <button value="Logout" onclick={fn _ => PersonaFfi.logout ()}/>
     </body>
